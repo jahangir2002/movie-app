@@ -3,6 +3,7 @@ import Search from './components/Search'
 import Spinner from './components/Spinner';
 import MovieCard from './components/MovieCard';
 import { useDebounce } from 'react-use';
+import { updateSearchCount } from './appwrite';
 
 // API - Apppication Programming Interface - a set of rules that allows one software application to talk to another
 
@@ -61,6 +62,10 @@ const App = () => {
       }
 
       setMovieList(data.results || [] );
+
+     if(query && data.results.length > 0) {
+      await updateSearchCount(query, data.results[0]);
+     }
 
     }
     catch (error) {
